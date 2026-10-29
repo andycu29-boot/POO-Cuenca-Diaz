@@ -9,15 +9,18 @@ public class CajaRegistradora {
         sc.useLocale(Locale.US);
         final double IVA = 0.15;
 
-        // Catálogo: un arreglo de objetos Producto (TODO 1 resuelto)
         Producto[] catalogo = {
-            new Producto("Cuaderno", 2.50, 10),
-            new Producto("Esfero", 0.75, 50),
-            new Producto("Borrador", 0.40, 30),
-            new Producto("Regla", 1.20, 0),
-            new Producto("Carpeta", 3.10, 8)
+            new Producto("Cuaderno", 2.50, 10, "Papelería"),
+            new Producto("Esfero", 0.75, 50, "Escritura"),
+            new Producto("Borrador", 0.40, 30, "Escritura"),
+            new Producto("Regla", 1.20, 0, "Geometría"),
+            new Producto("Carpeta", 3.10, 8, "Oficina")
         };
-        int[] carrito = new int[catalogo.length];   // unidades compradas
+
+        
+        catalogo[0].stock = -5; 
+
+        int[] carrito = new int[catalogo.length];
 
         int opcion;
         do {
@@ -36,12 +39,11 @@ public class CajaRegistradora {
 
             switch (opcion) {
                 case 1 -> {
-                    System.out.printf("%-4s %-10s %7s %6s%n",
-                            "Cód", "Producto", "Precio", "Stock");
-                    // TODO 2 resuelto: Recorrer el arreglo de objetos catalogo
+                    System.out.printf("%-4s %-10s %-12s %7s %6s%n",
+                            "Cód", "Producto", "Categoría", "Precio", "Stock");
                     for (int i = 0; i < catalogo.length; i++) {
-                        System.out.printf(Locale.US, "%-4d %-10s %7.2f %6d%n",
-                                i + 1, catalogo[i].nombre, catalogo[i].precio, catalogo[i].stock);
+                        System.out.printf(Locale.US, "%-4d %-10s %-12s %7.2f %6d%n",
+                                i + 1, catalogo[i].nombre, catalogo[i].categoria, catalogo[i].precio, catalogo[i].stock);
                     }
                 }
                 case 2 -> {
@@ -54,7 +56,6 @@ public class CajaRegistradora {
                         }
                         codigo = sc.nextInt();
                     } while (codigo < 1 || codigo > catalogo.length);
-                    
                     int k = codigo - 1;
                     int cantidad;
                     do {
@@ -66,7 +67,6 @@ public class CajaRegistradora {
                         cantidad = sc.nextInt();
                     } while (cantidad <= 0);
 
-                    // TODO 3 resuelto: Validar stock y actualizar carrito/catalogo
                     Producto p = catalogo[k];
                     if (cantidad <= p.stock) {
                         carrito[k] += cantidad;
@@ -79,7 +79,6 @@ public class CajaRegistradora {
                 case 3 -> {
                     double subtotal = 0;
                     System.out.println("------------ RECIBO ------------");
-                    // TODO 4 resuelto: Recorrer el carrito e imprimir filas
                     for (int i = 0; i < carrito.length; i++) {
                         if (carrito[i] > 0) {
                             double linea = carrito[i] * catalogo[i].precio;
@@ -88,7 +87,6 @@ public class CajaRegistradora {
                                     catalogo[i].nombre, carrito[i], catalogo[i].precio, linea);
                         }
                     }
-                    
                     double porcentaje;
                     if (subtotal >= 100) {
                         porcentaje = 0.10;

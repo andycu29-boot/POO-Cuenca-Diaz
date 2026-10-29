@@ -2,11 +2,11 @@ package ec.edu.epn.poo.lab4;
 
 public class Referencias {
     public static void main(String[] args) {
-        Producto p1 = new Producto("Cuaderno", 2.50, 10);
-        Producto p2 = p1;                 // copia la referencia (alias)
+        Producto p1 = new Producto("Cuaderno", 2.50, 10, "Papelería");
+        Producto p2 = p1;
         p2.precio = 3.00;
 
-        Producto p3 = new Producto("Cuaderno", 3.00, 10);
+        Producto p3 = new Producto("Cuaderno", 3.00, 10, "Papelería");
 
         System.out.println("1) p1.precio = " + p1.precio);
         System.out.println("2) p1 == p2  = " + (p1 == p2));
